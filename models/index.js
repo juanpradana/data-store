@@ -1,13 +1,14 @@
 const Sequelize = require('sequelize');
-const carbon_config = require('../configs/dataCarbon.config');
+// const carbon_config = require('../configs/dataCarbon.config');
+require('dotenv').config();
 
 const carbon_sequelize = new Sequelize(
-  carbon_config.DB,
-  carbon_config.USER,
-  carbon_config.PASSWORD,
+  process.env.DB,
+  process.env.USER,
+  process.env.PASSWORD,
   {
-    host: carbon_config.HOSTS,
-    dialect: carbon_config.DIALECT,
+    host: process.env.HOSTS,
+    dialect: process.env.DIALECT,
   },
 );
 

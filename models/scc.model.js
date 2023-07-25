@@ -25,16 +25,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.FLOAT,
     },
     Load_Current: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
     },
     Load_Power: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
     },
     Battery_Remaining_Percentage: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
     },
     Battery_Temperature: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
     },
     Battery_Discharge_Current: {
       type: Sequelize.FLOAT,
