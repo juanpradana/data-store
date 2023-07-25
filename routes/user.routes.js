@@ -48,6 +48,30 @@ router.use((request, response, next) => {
   next();
 });
 
+router.get('/', (req, res) => {
+  res.json({ message: 'ZAN API!' });
+});
+
+router.get(
+  '/getOneCarbon1',
+  controller.getOneCarbon1,
+);
+
+router.get(
+  '/getOneCarbon2',
+  controller.getOneCarbon2,
+);
+
+router.get(
+  '/getOneLoggerDevice',
+  controller.getOneLoggerDevice,
+);
+
+router.get(
+  '/getOneSCC',
+  controller.getOneSCC,
+);
+
 router.post(
   '/upCarbon1',
   uploadUpED1.single('csvFile'),
@@ -69,9 +93,5 @@ router.post(
   '/scc',
   controller.addSCC,
 );
-
-router.get('/', (req, res) => {
-  res.json({ message: 'ZAN API!' });
-});
 
 module.exports = router;

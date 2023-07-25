@@ -7,6 +7,54 @@ const Carbon2 = db.carbon2;
 const SCC = db.scc;
 const LoggerDevice = db.loggerDevice;
 
+exports.getOneCarbon1 = (request, response) => {
+  Carbon1.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.getOneCarbon2 = (request, response) => {
+  Carbon2.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.getOneLoggerDevice = (request, response) => {
+  LoggerDevice.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.getOneSCC = (request, response) => {
+  SCC.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
 exports.addLoggerCondition = (request, response) => {
   LoggerDevice.create({
     ts: request.body.ts,
