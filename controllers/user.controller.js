@@ -178,33 +178,45 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
 exports.getAverageHourSCC = (request, response) => {
   try {
     // Hitung timestamp untuk 24 jam yang lalu
-    const twentyFourHoursAgo = new Date();
-    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
 
     // Query data dari database
     const data = SCC.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
-        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
-        [db.Sequelize.fn('avg', db.sequelize.col('PV_Voltage')), 'PV_Voltage'],
-        [db.Sequelize.fn('avg', db.sequelize.col('PV_Current')), 'PV_Current'],
-        [db.Sequelize.fn('avg', db.sequelize.col('PV_Power')), 'PV_Power'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Voltage')), 'Battery_Voltage'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Charge_Current')), 'Battery_Charge_Current'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Charge_Power')), 'Battery_Charge_Power'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Load_Current')), 'Load_Current'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Load_Power')), 'Load_Power'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Remaining_Percentage')), 'Battery_Remaining_Percentage'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Temperature')), 'Battery_Temperature'],
-        [db.Sequelize.fn('avg', db.sequelize.col('Battery_Discharge_Current')), 'Battery_Discharge_Current'],
+        [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+          'humanTime',
+        ],
+        [db.Sequelize.literal('avg("PV_Voltage")'), 'PV_Voltage'],
+        [db.Sequelize.literal('avg("PV_Current")'), 'PV_Current'],
+        [db.Sequelize.literal('avg("PV_Power")'), 'PV_Power'],
+        [db.Sequelize.literal('avg("Battery_Voltage")'), 'Battery_Voltage'],
+        [db.Sequelize.literal('avg("Battery_Charge_Current")'), 'Battery_Charge_Current'],
+        [db.Sequelize.literal('avg("Battery_Charge_Power")'), 'Battery_Charge_Power'],
+        [db.Sequelize.literal('avg("Load_Current")'), 'Load_Current'],
+        [db.Sequelize.literal('avg("Load_Power")'), 'Load_Power'],
+        [db.Sequelize.literal('avg("Battery_Remaining_Percentage")'), 'Battery_Remaining_Percentage'],
+        [db.Sequelize.literal('avg("Battery_Temperature")'), 'Battery_Temperature'],
+        [db.Sequelize.literal('avg("Battery_Discharge_Current")'), 'Battery_Discharge_Current'],
       ],
       where: {
         ts: {
           [db.Op.gte]: twentyFourHoursAgo,
         },
       },
-      group: ['hour'],
-      order: [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts'))],
+      group: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+      order: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
     });
 
     // Kirim respons dengan data hasil query
