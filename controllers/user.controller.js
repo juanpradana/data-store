@@ -140,28 +140,28 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
         [
-          literal(
+          db.Sequelize.literal(
             'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
           'humanTime',
         ],
-        [literal('avg("cpu_usage")'), 'cpu_usage'],
-        [literal('avg("mem_gpu")'), 'mem_gpu'],
-        [literal('avg("mem_arm")'), 'mem_arm'],
-        [literal('avg("temp")'), 'temp'],
+        [db.Sequelize.literal('avg("cpu_usage")'), 'cpu_usage'],
+        [db.Sequelize.literal('avg("mem_gpu")'), 'mem_gpu'],
+        [db.Sequelize.literal('avg("mem_arm")'), 'mem_arm'],
+        [db.Sequelize.literal('avg("temp")'), 'temp'],
       ],
       where: {
         ts: {
-          [Op.gte]: twentyFourHoursAgo,
+          [db.Op.gte]: twentyFourHoursAgo,
         },
       },
       group: [
-        literal(
+        db.Sequelize.literal(
           'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
         ),
       ],
       order: [
-        literal(
+        db.Sequelize.literal(
           'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
         ),
       ],
