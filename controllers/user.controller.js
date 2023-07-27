@@ -134,42 +134,35 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
   try {
     // Hitung timestamp untuk 24 jam yang lalu
     const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
-    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
     // Query data dari database
     const data = await LoggerDevice.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
         [
-          db.Sequelize.fn(
-            'date_trunc',
-            'hour',
-            db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
+          literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
-          'hour',
+          'humanTime',
         ],
-        [db.Sequelize.fn('avg', db.Sequelize.col('cpu_usage')), 'cpu_usage'],
-        [db.Sequelize.fn('avg', db.Sequelize.col('mem_gpu')), 'mem_gpu'],
-        [db.Sequelize.fn('avg', db.Sequelize.col('mem_arm')), 'mem_arm'],
-        [db.Sequelize.fn('avg', db.Sequelize.col('temp')), 'temp'],
+        [literal('avg("cpu_usage")'), 'cpu_usage'],
+        [literal('avg("mem_gpu")'), 'mem_gpu'],
+        [literal('avg("mem_arm")'), 'mem_arm'],
+        [literal('avg("temp")'), 'temp'],
       ],
       where: {
         ts: {
-          [db.Op.gte]: twentyFourHoursAgo,
+          [Op.gte]: twentyFourHoursAgo,
         },
       },
       group: [
-        db.Sequelize.fn(
-          'date_trunc',
-          'hour',
-          db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
+        literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
         ),
       ],
       order: [
-        db.Sequelize.fn(
-          'date_trunc',
-          'hour',
-          db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
+        literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
         ),
       ],
     });
