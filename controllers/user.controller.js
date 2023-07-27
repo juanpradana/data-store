@@ -144,7 +144,7 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
           db.Sequelize.fn(
             'date_trunc',
             'hour',
-            db.Sequelize.fn('AT TIME ZONE', 'Asia/Jakarta', db.Sequelize.col('ts')),
+            db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
           ),
           'hour',
         ],
@@ -158,12 +158,18 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
           [db.Op.gte]: twentyFourHoursAgo,
         },
       },
-      group: ['hour'],
+      group: [
+        db.Sequelize.fn(
+          'date_trunc',
+          'hour',
+          db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
+        ),
+      ],
       order: [
         db.Sequelize.fn(
           'date_trunc',
           'hour',
-          db.Sequelize.fn('AT TIME ZONE', 'Asia/Jakarta', db.Sequelize.col('ts')),
+          db.Sequelize.fn('timezone', 'Asia/Jakarta', db.Sequelize.col('ts')),
         ),
       ],
     });
