@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
   const SCC = sequelize.define('scc', {
     ts: {
-      type: Sequelize.BIGINT,
+      type: Sequelize.DATE,
     },
     humanTime: {
       type: Sequelize.STRING,

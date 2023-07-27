@@ -72,6 +72,26 @@ router.get(
   controller.getOneSCC,
 );
 
+router.get(
+  '/getLastDayCarbon1',
+  controller.getAverageHourCarbon1,
+);
+
+router.get(
+  '/getLastDayCarbon2',
+  controller.getAverageHourCarbon2,
+);
+
+router.get(
+  '/getAvgLoggerDevice',
+  controller.getAverageHourLoggerDevice,
+);
+
+router.get(
+  '/getAvgSCC',
+  controller.getAverageHourSCC,
+);
+
 router.post(
   '/upCarbon1',
   uploadUpED1.single('csvFile'),

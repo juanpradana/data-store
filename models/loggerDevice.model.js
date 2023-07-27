@@ -1,22 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
   const LoggerDevice = sequelize.define('logger_device', {
     ts: {
-      type: Sequelize.BIGINT,
+      type: Sequelize.DATE,
     },
     humanTime: {
       type: Sequelize.STRING,
     },
     cpu_usage: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
     mem_gpu: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
     mem_arm: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
     },
     temp: {
-      type: Sequelize.STRING,
+      type: Sequelize.FLOAT,
     },
   });
   return LoggerDevice;
