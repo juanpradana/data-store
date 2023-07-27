@@ -28,6 +28,10 @@ Node.js version on author machine running: **v18.13.0**
 | GET | /api/getOneCarbon2 | Return json one of last data on carbon2 from database |
 | GET | /api/getOneLoggerDevice | Return json one of last data on loggerDevice from database |
 | GET | /api/getOneSCC | Return json one of last data on scc from database |
+| GET | /api/getLastDayCarbon1 | Return json data average every hour yerterday carbon1 from database |
+| GET | /api/getLastDayCarbon2 | Return json data average every hour yerterday carbon2 from database |
+| GET | /api/getAvgLoggerDevice | Return json data average every hour last 24 hours logger condition from database |
+| GET | /api/getAvgSCC | Return json data average every hour last 24 hours SCC from database |
 | POST | /api/upCarbon1 | Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov1 and append to database |
 | POST | /api/upCarbon2 | Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov2 and append to database |
 | POST | /api/loggerCondition | Body data is json will be saved on database |
@@ -55,10 +59,10 @@ Node.js version on author machine running: **v18.13.0**
   {
     "ts": 1690269949330,
     "humanTime": "2023/07/25 14:25:49",
-    "cpu_usage": "21%",
-    "mem_gpu": "76M",
-    "mem_arm": "948M",
-    "temp": "43.8'C"
+    "cpu_usage": 21,
+    "mem_gpu": 76M,
+    "mem_arm": 948,
+    "temp": 43.8
   }
   ```
 - json example for /scc:
