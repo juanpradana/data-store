@@ -143,7 +143,7 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
           db.Sequelize.literal(
             'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
-          'humanTime',
+          'time',
         ],
         [db.Sequelize.literal('avg("cpu_usage")'), 'cpu_usage'],
         [db.Sequelize.literal('avg("mem_gpu")'), 'mem_gpu'],
@@ -188,7 +188,7 @@ exports.getAverageHourSCC = (request, response) => {
           db.Sequelize.literal(
             'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
-          'humanTime',
+          'time',
         ],
         [db.Sequelize.literal('avg("PV_Voltage")'), 'PV_Voltage'],
         [db.Sequelize.literal('avg("PV_Current")'), 'PV_Current'],
