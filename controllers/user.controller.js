@@ -1,5 +1,6 @@
 const fs = require('fs');
 const csvParser = require('csv-parser');
+const moment = require('moment-timezone');
 const db = require('../models');
 
 const Carbon1 = db.carbon1;
@@ -132,7 +133,7 @@ exports.getAverageHourCarbon2 = (request, response) => {
 exports.getAverageHourLoggerDevice = (request, response) => {
   try {
     // Hitung timestamp untuk 24 jam yang lalu
-    const twentyFourHoursAgo = new Date();
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
     // Query data dari database
