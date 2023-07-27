@@ -65,7 +65,7 @@ exports.getAverageHourCarbon1 = (request, response) => {
 
     const data = Carbon1.findAll({
       attributes: [
-        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'ts'],
+        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Humi')), 'dht22Humi'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22HeatIndex')), 'dht22HeatIndex'],
@@ -102,7 +102,7 @@ exports.getAverageHourCarbon2 = (request, response) => {
 
     const data = Carbon2.findAll({
       attributes: [
-        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'ts'],
+        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Humi')), 'dht22Humi'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22HeatIndex')), 'dht22HeatIndex'],
@@ -172,7 +172,7 @@ exports.getAverageHourSCC = (request, response) => {
     const data = SCC.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
-        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'time'],
+        [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.sequelize.col('PV_Voltage')), 'PV_Voltage'],
         [db.Sequelize.fn('avg', db.sequelize.col('PV_Current')), 'PV_Current'],
         [db.Sequelize.fn('avg', db.sequelize.col('PV_Power')), 'PV_Power'],
@@ -191,7 +191,7 @@ exports.getAverageHourSCC = (request, response) => {
         },
       },
       group: ['hour'],
-      order: ['hour'],
+      order: [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts'))],
     });
 
     // Kirim respons dengan data hasil query
