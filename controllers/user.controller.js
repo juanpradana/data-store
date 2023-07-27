@@ -143,7 +143,7 @@ exports.getAverageHourLoggerDevice = (request, response) => {
         [db.Sequelize.fn('avg', db.Sequelize.col('cpu_usage')), 'cpu_usage'],
         [db.Sequelize.fn('avg', db.Sequelize.col('mem_gpu')), 'mem_gpu'],
         [db.Sequelize.fn('avg', db.Sequelize.col('mem_arm')), 'mem_arm'],
-        [db.Sequelize.fn('avg', db.Sequelize.col('temperature')), 'temperature'],
+        [db.Sequelize.fn('avg', db.Sequelize.col('temp')), 'temp'],
       ],
       where: {
         ts: {
