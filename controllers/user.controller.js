@@ -56,7 +56,7 @@ exports.getOneSCC = (request, response) => {
     });
 };
 
-exports.getAverageHourCarbon1 = (request, response) => {
+exports.getAverageHourCarbon1 = async (request, response) => {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -64,7 +64,7 @@ exports.getAverageHourCarbon1 = (request, response) => {
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
 
-    const data = Carbon1.findAll({
+    const data = await Carbon1.findAll({
       attributes: [
         [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
@@ -93,7 +93,7 @@ exports.getAverageHourCarbon1 = (request, response) => {
   }
 };
 
-exports.getAverageHourCarbon2 = (request, response) => {
+exports.getAverageHourCarbon2 = async (request, response) => {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -101,7 +101,7 @@ exports.getAverageHourCarbon2 = (request, response) => {
     const startOfToday = new Date();
     startOfToday.setHours(0, 0, 0, 0);
 
-    const data = Carbon2.findAll({
+    const data = await Carbon2.findAll({
       attributes: [
         [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
@@ -175,13 +175,13 @@ exports.getAverageHourLoggerDevice = async (request, response) => {
   }
 };
 
-exports.getAverageHourSCC = (request, response) => {
+exports.getAverageHourSCC = async (request, response) => {
   try {
     // Hitung timestamp untuk 24 jam yang lalu
     const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
 
     // Query data dari database
-    const data = SCC.findAll({
+    const data = await SCC.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
         [
