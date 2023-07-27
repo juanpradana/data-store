@@ -130,14 +130,14 @@ exports.getAverageHourCarbon2 = (request, response) => {
   }
 };
 
-exports.getAverageHourLoggerDevice = (request, response) => {
+exports.getAverageHourLoggerDevice = async (request, response) => {
   try {
     // Hitung timestamp untuk 24 jam yang lalu
     const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
     // Query data dari database
-    const data = LoggerDevice.findAll({
+    const data = await LoggerDevice.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
         [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts')), 'hour'],
