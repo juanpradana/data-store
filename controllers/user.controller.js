@@ -139,7 +139,7 @@ exports.getAverageHourLoggerDevice = (request, response) => {
     const data = LoggerDevice.findAll({
       attributes: [
         // Kolom yang ingin dihitung rata-ratanya
-        [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts')), 'ts'],
+        [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts')), 'hour'],
         [db.Sequelize.fn('avg', db.Sequelize.col('cpu_usage')), 'cpu_usage'],
         [db.Sequelize.fn('avg', db.Sequelize.col('mem_gpu')), 'mem_gpu'],
         [db.Sequelize.fn('avg', db.Sequelize.col('mem_arm')), 'mem_arm'],
@@ -151,7 +151,7 @@ exports.getAverageHourLoggerDevice = (request, response) => {
         },
       },
       group: ['hour'],
-      order: ['hour'],
+      order: [db.Sequelize.fn('date_trunc', 'hour', db.Sequelize.col('ts'))],
     });
 
     // Kirim respons dengan data hasil query
