@@ -85,7 +85,7 @@ exports.getOneDHT2 = (request, response) => {
 };
 
 exports.get50LogStatus1 = (request, response) => {
-  LogStatus1.findOne({
+  LogStatus1.findAll({
     limit: 50,
     order: [['createdAt', 'DESC']],
   })
@@ -98,7 +98,7 @@ exports.get50LogStatus1 = (request, response) => {
 };
 
 exports.get50LogStatus2 = (request, response) => {
-  LogStatus2.findOne({
+  LogStatus2.findAll({
     limit: 50,
     order: [['createdAt', 'DESC']],
   })
