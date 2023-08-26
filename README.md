@@ -28,23 +28,30 @@ Node.js version on author machine running: **v18.13.0**
 | GET | /api/getOneCarbon2 | Return json one of last data on carbon2 from database |
 | GET | /api/getOneLoggerDevice | Return json one of last data on loggerDevice from database |
 | GET | /api/getOneSCC | Return json one of last data on scc from database |
+| GET | /api/getOneDHT1 | Return json one of last DHT22 device 1 data from database |
+| GET | /api/getOneDHT2 | Return json one of last DHT22 device 2 data from database |
+| GET | /api/get50LogStatus1 | Return json 50 data of last device 1 log status from database |
+| GET | /api/get50LogStatus2 | Return json 50 data of last device 2 log status from database |
 | GET | /api/getLastDayCarbon1 | Return json data average every hour yerterday carbon1 from database |
 | GET | /api/getLastDayCarbon2 | Return json data average every hour yerterday carbon2 from database |
 | GET | /api/getAvgLoggerDevice | Return json data average every hour last 24 hours logger condition from database |
 | GET | /api/getAvgSCC | Return json data average every hour last 24 hours SCC from database |
+| GET | /api/getAvgDHT1 | Return json data average every hour last 24 hours DHT22 device 1 from database |
+| GET | /api/getAvgDHT2 | Return json data average every hour last 24 hours DHT22 device 2 from database |
 | POST | /api/upCarbon1 | Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov1 and append to database |
 | POST | /api/upCarbon2 | Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov2 and append to database |
 | POST | /api/loggerCondition | Body data is json will be saved on database |
 | POST | /api/scc | Body data is json will be saved on database |
+| POST | /api/dht1 | Body data is json will be saved on database |
+| POST | /api/dht2 | Body data is json will be saved on database |
+| POST | /api/loggerStatus1 | Body data is json will be saved on database |
+| POST | /api/loggerStatus2 | Body data is json will be saved on database |
 
 ### Note
 - csv header file carbon and value must be:
   ```text
     ts: INTEGER,
     humanTime: STRING,
-    dht22Temp: FLOAT,
-    dht22Humi: FLOAT,
-    dht22HeatIndex: FLOAT,
     bmp388Pressure: FLOAT,
     bmp388Temp: FLOAT,
     bmp388ApprxAltitude: FLOAT,
@@ -83,6 +90,23 @@ Node.js version on author machine running: **v18.13.0**
     "Battery_Discharge_Current": 0.1
   }
   ```
+- json example for /dht1 and /dht2:
+  ```json
+  {
+    "ts": 1690269957302,
+    "humanTime": "2023/07/25 14:25:57",
+    "dht22Temp": 64.28,
+    "dht22Humi": 0.36,
+    "dht22HeatIndex": 23.72,
+  }
+  ```
+- json example for /loggerStatus1 and /loggerStatus2:
+  ```json
+  {
+    "log": "jdekkekklkekllkewlwewe",
+  }
+  ```
+  
 ## Example Request Result
 ### POST /api/loggerCondition
 ![image](https://github.com/juanpradana/data-store/assets/30497994/e72e32ec-d8f3-45ec-949d-3f6489391bae)
