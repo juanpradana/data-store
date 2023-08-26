@@ -67,7 +67,7 @@ Node.js version on author machine running: **v18.13.0**
     "ts": 1690269949330,
     "humanTime": "2023/07/25 14:25:49",
     "cpu_usage": 21,
-    "mem_gpu": 76M,
+    "mem_gpu": 76,
     "mem_arm": 948,
     "temp": 43.8
   }
