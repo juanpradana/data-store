@@ -20,5 +20,9 @@ db.carbon1 = require('./carbon1.model')(carbon_sequelize, Sequelize);
 db.carbon2 = require('./carbon2.model')(carbon_sequelize, Sequelize);
 db.scc = require('./scc.model')(carbon_sequelize, Sequelize);
 db.loggerDevice = require('./loggerDevice.model')(carbon_sequelize, Sequelize);
+db.dht1 = require('./dht1.model')(carbon_sequelize, Sequelize);
+db.dht2 = require('./dht2.model')(carbon_sequelize, Sequelize);
+db.logStatus1 = require('./logStatus1.model')(carbon_sequelize, Sequelize);
+db.logStatus2 = require('./logStatus2.model')(carbon_sequelize, Sequelize);
 
 module.exports = db;

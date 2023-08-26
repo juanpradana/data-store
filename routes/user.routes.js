@@ -73,6 +73,26 @@ router.get(
 );
 
 router.get(
+  '/getOneDHT1',
+  controller.getOneDHT1,
+);
+
+router.get(
+  '/getOneDHT2',
+  controller.getOneDHT2,
+);
+
+router.get(
+  '/get50LogStatus1',
+  controller.get50LogStatus1,
+);
+
+router.get(
+  '/get50LogStatus2',
+  controller.get50LogStatus2,
+);
+
+router.get(
   '/getLastDayCarbon1',
   controller.getAverageHourCarbon1,
 );
@@ -90,6 +110,16 @@ router.get(
 router.get(
   '/getAvgSCC',
   controller.getAverageHourSCC,
+);
+
+router.get(
+  '/getAvgDHT1',
+  controller.getAverageHourDHT1,
+);
+
+router.get(
+  '/getAvgDHT2',
+  controller.getAverageHourDHT2,
 );
 
 router.post(
@@ -112,6 +142,26 @@ router.post(
 router.post(
   '/scc',
   controller.addSCC,
+);
+
+router.post(
+  '/dht1',
+  controller.addDHT1,
+);
+
+router.post(
+  '/dht2',
+  controller.addDHT2,
+);
+
+router.post(
+  '/loggerStatus1',
+  controller.addLogStatus1,
+);
+
+router.post(
+  '/loggerStatus2',
+  controller.addLogStatus2,
 );
 
 module.exports = router;

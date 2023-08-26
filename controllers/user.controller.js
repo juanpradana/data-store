@@ -7,6 +7,10 @@ const Carbon1 = db.carbon1;
 const Carbon2 = db.carbon2;
 const SCC = db.scc;
 const LoggerDevice = db.loggerDevice;
+const DHT1 = db.dht1;
+const DHT2 = db.dht2;
+const LogStatus1 = db.logStatus1;
+const LogStatus2 = db.logStatus2;
 
 exports.getOneCarbon1 = (request, response) => {
   Carbon1.findOne({
@@ -47,6 +51,56 @@ exports.getOneLoggerDevice = (request, response) => {
 exports.getOneSCC = (request, response) => {
   SCC.findOne({
     order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.getOneDHT1 = (request, response) => {
+  DHT1.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.getOneDHT2 = (request, response) => {
+  DHT2.findOne({
+    order: [['ts', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.get50LogStatus1 = (request, response) => {
+  LogStatus1.findOne({
+    limit: 50,
+    order: [['createdAt', 'DESC']],
+  })
+    .then((result) => {
+      response.json(result);
+    })
+    .catch((error) => {
+      response.status(500).json({ error: 'Internal server error' });
+    });
+};
+
+exports.get50LogStatus2 = (request, response) => {
+  LogStatus2.findOne({
+    limit: 50,
+    order: [['createdAt', 'DESC']],
   })
     .then((result) => {
       response.json(result);
@@ -227,6 +281,96 @@ exports.getAverageHourSCC = async (request, response) => {
   }
 };
 
+exports.getAverageHourDHT1 = async (request, response) => {
+  try {
+    // Hitung timestamp untuk 24 jam yang lalu
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+    // Query data dari database
+    const data = await DHT1.findAll({
+      attributes: [
+        // Kolom yang ingin dihitung rata-ratanya
+        [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+          'time',
+        ],
+        [db.Sequelize.literal('avg("humanTime")'), 'humanTime'],
+        [db.Sequelize.literal('avg("dht22Temp")'), 'dht22Temp'],
+        [db.Sequelize.literal('avg("dht22Humi")'), 'dht22Humi'],
+        [db.Sequelize.literal('avg("dht22HeatIndex")'), 'dht22HeatIndex'],
+      ],
+      where: {
+        ts: {
+          [db.Op.gte]: twentyFourHoursAgo,
+        },
+      },
+      group: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+      order: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+    });
+
+    // Kirim respons dengan data hasil query
+    response.json(data);
+  } catch (error) {
+    console.error('Error:', error);
+    response.status(500).json({ error: 'Failed to fetch data' });
+  }
+};
+
+exports.getAverageHourDHT2 = async (request, response) => {
+  try {
+    // Hitung timestamp untuk 24 jam yang lalu
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+    // Query data dari database
+    const data = await DHT2.findAll({
+      attributes: [
+        // Kolom yang ingin dihitung rata-ratanya
+        [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+          'time',
+        ],
+        [db.Sequelize.literal('avg("humanTime")'), 'humanTime'],
+        [db.Sequelize.literal('avg("dht22Temp")'), 'dht22Temp'],
+        [db.Sequelize.literal('avg("dht22Humi")'), 'dht22Humi'],
+        [db.Sequelize.literal('avg("dht22HeatIndex")'), 'dht22HeatIndex'],
+      ],
+      where: {
+        ts: {
+          [db.Op.gte]: twentyFourHoursAgo,
+        },
+      },
+      group: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+      order: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+    });
+
+    // Kirim respons dengan data hasil query
+    response.json(data);
+  } catch (error) {
+    console.error('Error:', error);
+    response.status(500).json({ error: 'Failed to fetch data' });
+  }
+};
+
 exports.addLoggerCondition = (request, response) => {
   LoggerDevice.create({
     ts: request.body.ts,
@@ -254,6 +398,42 @@ exports.addSCC = (request, response) => {
     Battery_Remaining_Percentage: request.body.Battery_Remaining_Percentage,
     Battery_Temperature: request.body.Battery_Temperature,
     Battery_Discharge_Current: request.body.Battery_Discharge_Current,
+  });
+  response.status(200).send({ message: 'success' });
+};
+
+exports.addDHT1 = (request, response) => {
+  DHT1.create({
+    ts: request.body.ts,
+    humanTime: request.body.humanTime,
+    dht22Temp: request.body.dht22Temp,
+    dht22Humi: request.body.dht22Humi,
+    dht22HeatIndex: request.body.dht22HeatIndex,
+  });
+  response.status(200).send({ message: 'success' });
+};
+
+exports.addDHT2 = (request, response) => {
+  DHT2.create({
+    ts: request.body.ts,
+    humanTime: request.body.humanTime,
+    dht22Temp: request.body.dht22Temp,
+    dht22Humi: request.body.dht22Humi,
+    dht22HeatIndex: request.body.dht22HeatIndex,
+  });
+  response.status(200).send({ message: 'success' });
+};
+
+exports.addLogStatus1 = (request, response) => {
+  LogStatus1.create({
+    log: request.body.log,
+  });
+  response.status(200).send({ message: 'success' });
+};
+
+exports.addLogStatus2 = (request, response) => {
+  LogStatus2.create({
+    log: request.body.log,
   });
   response.status(200).send({ message: 'success' });
 };

@@ -6,15 +6,6 @@ module.exports = (sequelize, Sequelize) => {
     humanTime: {
       type: Sequelize.STRING,
     },
-    dht22Temp: {
-      type: Sequelize.FLOAT,
-    },
-    dht22Humi: {
-      type: Sequelize.FLOAT,
-    },
-    dht22HeatIndex: {
-      type: Sequelize.FLOAT,
-    },
     bmp388Pressure: {
       type: Sequelize.FLOAT,
     },
