@@ -445,6 +445,16 @@ exports.addCarbon1 = (request, response) => {
   fs.createReadStream(request.file.path)
     .pipe(csvParser())
     .on('data', (row) => {
+      // Konversi nilai-nilai numerik ke tipe data yang sesuai.
+      row.ts = parseInt(row.ts, 10);
+      row.bmp388Pressure = parseFloat(row.bmp388Pressure);
+      row.bmp388Temp = parseFloat(row.bmp388Temp);
+      row.bmp388ApprxAltitude = parseFloat(row.bmp388ApprxAltitude);
+      row.sht85Humi = parseFloat(row.sht85Humi);
+      row.sht85Temp = parseFloat(row.sht85Temp);
+      row.co2 = parseInt(row.co2, 10);
+      row.ch4 = parseInt(row.ch4, 10);
+      row.H2OSHT85 = parseFloat(row.H2OSHT85);
       data.push(row);
     })
     .on('end', () => {
@@ -469,6 +479,16 @@ exports.addCarbon2 = (request, response) => {
   fs.createReadStream(request.file.path)
     .pipe(csvParser())
     .on('data', (row) => {
+      // Konversi nilai-nilai numerik ke tipe data yang sesuai.
+      row.ts = parseInt(row.ts, 10);
+      row.bmp388Pressure = parseFloat(row.bmp388Pressure);
+      row.bmp388Temp = parseFloat(row.bmp388Temp);
+      row.bmp388ApprxAltitude = parseFloat(row.bmp388ApprxAltitude);
+      row.sht85Humi = parseFloat(row.sht85Humi);
+      row.sht85Temp = parseFloat(row.sht85Temp);
+      row.co2 = parseInt(row.co2, 10);
+      row.ch4 = parseInt(row.ch4, 10);
+      row.H2OSHT85 = parseFloat(row.H2OSHT85);
       data.push(row);
     })
     .on('end', () => {
