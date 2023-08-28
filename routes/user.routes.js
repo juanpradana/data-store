@@ -94,11 +94,21 @@ router.get(
 
 router.get(
   '/getLastDayCarbon1',
-  controller.getAverageHourCarbon1,
+  controller.getLastDayCarbon1,
 );
 
 router.get(
   '/getLastDayCarbon2',
+  controller.getLastDayCarbon2,
+);
+
+router.get(
+  '/getAvgCarbon1',
+  controller.getAverageHourCarbon1,
+);
+
+router.get(
+  '/getAvgCarbon2',
   controller.getAverageHourCarbon2,
 );
 

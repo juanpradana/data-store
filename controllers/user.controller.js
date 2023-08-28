@@ -110,7 +110,7 @@ exports.get50LogStatus2 = (request, response) => {
     });
 };
 
-exports.getAverageHourCarbon1 = async (request, response) => {
+exports.getLastDayCarbon1 = async (request, response) => {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -121,9 +121,6 @@ exports.getAverageHourCarbon1 = async (request, response) => {
     const data = await Carbon1.findAll({
       attributes: [
         [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22Humi')), 'dht22Humi'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22HeatIndex')), 'dht22HeatIndex'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388Pressure')), 'bmp388Pressure'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388Temp')), 'bmp388Temp'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388ApprxAltitude')), 'bmp388ApprxAltitude'],
@@ -147,7 +144,7 @@ exports.getAverageHourCarbon1 = async (request, response) => {
   }
 };
 
-exports.getAverageHourCarbon2 = async (request, response) => {
+exports.getLastDayCarbon2 = async (request, response) => {
   try {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -158,9 +155,6 @@ exports.getAverageHourCarbon2 = async (request, response) => {
     const data = await Carbon2.findAll({
       attributes: [
         [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts')), 'hour'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22Temp')), 'dht22Temp'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22Humi')), 'dht22Humi'],
-        [db.Sequelize.fn('avg', db.sequelize.col('dht22HeatIndex')), 'dht22HeatIndex'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388Pressure')), 'bmp388Pressure'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388Temp')), 'bmp388Temp'],
         [db.Sequelize.fn('avg', db.sequelize.col('bmp388ApprxAltitude')), 'bmp388ApprxAltitude'],
@@ -176,6 +170,100 @@ exports.getAverageHourCarbon2 = async (request, response) => {
         },
       },
       group: [db.Sequelize.fn('date_trunc', 'hour', db.sequelize.col('ts'))],
+    });
+
+    response.json(data);
+  } catch (error) {
+    response.status(500).json({ error: 'Failed to get average data per hour' });
+  }
+};
+
+exports.getAverageHourCarbon1 = async (request, response) => {
+  try {
+    // Hitung timestamp untuk 24 jam yang lalu
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+    // Query data dari database
+    const data = await Carbon1.findAll({
+      attributes: [
+        // Kolom yang ingin dihitung rata-ratanya
+        [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+          'time',
+        ],
+        [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+        [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+        [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+        [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+        [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+        [db.Sequelize.literal('avg("co2")'), 'co2'],
+        [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+        [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+      ],
+      where: {
+        ts: {
+          [db.Op.gte]: twentyFourHoursAgo,
+        },
+      },
+      group: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+      order: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+    });
+
+    response.json(data);
+  } catch (error) {
+    response.status(500).json({ error: 'Failed to get average data per hour' });
+  }
+};
+
+exports.getAverageHourCarbon2 = async (request, response) => {
+  try {
+    // Hitung timestamp untuk 24 jam yang lalu
+    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+    // Query data dari database
+    const data = await Carbon2.findAll({
+      attributes: [
+        // Kolom yang ingin dihitung rata-ratanya
+        [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+          'time',
+        ],
+        [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+        [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+        [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+        [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+        [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+        [db.Sequelize.literal('avg("co2")'), 'co2'],
+        [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+        [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+      ],
+      where: {
+        ts: {
+          [db.Op.gte]: twentyFourHoursAgo,
+        },
+      },
+      group: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
+      order: [
+        db.Sequelize.literal(
+          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+        ),
+      ],
     });
 
     response.json(data);
