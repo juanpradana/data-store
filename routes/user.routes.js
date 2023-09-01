@@ -103,12 +103,12 @@ router.get(
 );
 
 router.get(
-  '/getAvgCarbon1',
+  '/getAvgCarbon1/:timeSelect?',
   controller.getAverageHourCarbon1,
 );
 
 router.get(
-  '/getAvgCarbon2',
+  '/getAvgCarbon2/:timeSelect?',
   controller.getAverageHourCarbon2,
 );
 

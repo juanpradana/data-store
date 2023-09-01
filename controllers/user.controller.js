@@ -180,93 +180,181 @@ exports.getLastDayCarbon2 = async (request, response) => {
 
 exports.getAverageHourCarbon1 = async (request, response) => {
   try {
-    // Hitung timestamp untuk 24 jam yang lalu
-    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+    const { timeSelect } = request.params;
+    if (timeSelect) {
+      // Hitung timestamp untuk 24 jam yang lalu
+      const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(parseInt(timeSelect, 10), 'hours').toDate();
 
-    // Query data dari database
-    const data = await Carbon1.findAll({
-      attributes: [
-        // Kolom yang ingin dihitung rata-ratanya
-        [
+      // Query data dari database
+      const data = await Carbon1.findAll({
+        attributes: [
+          // Kolom yang ingin dihitung rata-ratanya
+          [
+            db.Sequelize.literal(
+              'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+            ),
+            'time',
+          ],
+          [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+          [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+          [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+          [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+          [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+          [db.Sequelize.literal('avg("co2")'), 'co2'],
+          [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+          [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+        ],
+        where: {
+          ts: {
+            [db.Op.gte]: twentyFourHoursAgo,
+          },
+        },
+        group: [
           db.Sequelize.literal(
             'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
-          'time',
         ],
-        [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
-        [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
-        [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
-        [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
-        [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
-        [db.Sequelize.literal('avg("co2")'), 'co2'],
-        [db.Sequelize.literal('avg("ch4")'), 'ch4'],
-        [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
-      ],
-      where: {
-        ts: {
-          [db.Op.gte]: twentyFourHoursAgo,
-        },
-      },
-      group: [
-        db.Sequelize.literal(
-          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
-        ),
-      ],
-      order: [
-        db.Sequelize.literal(
-          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
-        ),
-      ],
-    });
+        order: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+      });
 
-    response.json(data);
+      response.json(data);
+    } else {
+      // Hitung timestamp untuk 24 jam yang lalu
+      const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+      // Query data dari database
+      const data = await Carbon1.findAll({
+        attributes: [
+          // Kolom yang ingin dihitung rata-ratanya
+          [
+            db.Sequelize.literal(
+              'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+            ),
+            'time',
+          ],
+          [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+          [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+          [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+          [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+          [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+          [db.Sequelize.literal('avg("co2")'), 'co2'],
+          [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+          [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+        ],
+        where: {
+          ts: {
+            [db.Op.gte]: twentyFourHoursAgo,
+          },
+        },
+        group: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+        order: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+      });
+
+      response.json(data);
+    }
   } catch (error) {
     response.status(500).json({ error: 'Failed to get average data per hour' });
   }
 };
 
 exports.getAverageHourCarbon2 = async (request, response) => {
+  const { timeSelect } = request.params;
   try {
-    // Hitung timestamp untuk 24 jam yang lalu
-    const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+    if (timeSelect) {
+      // Hitung timestamp untuk 24 jam yang lalu
+      const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(parseInt(timeSelect, 10), 'hours').toDate();
 
-    // Query data dari database
-    const data = await Carbon2.findAll({
-      attributes: [
-        // Kolom yang ingin dihitung rata-ratanya
-        [
+      // Query data dari database
+      const data = await Carbon2.findAll({
+        attributes: [
+          // Kolom yang ingin dihitung rata-ratanya
+          [
+            db.Sequelize.literal(
+              'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+            ),
+            'time',
+          ],
+          [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+          [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+          [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+          [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+          [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+          [db.Sequelize.literal('avg("co2")'), 'co2'],
+          [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+          [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+        ],
+        where: {
+          ts: {
+            [db.Op.gte]: twentyFourHoursAgo,
+          },
+        },
+        group: [
           db.Sequelize.literal(
             'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
           ),
-          'time',
         ],
-        [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
-        [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
-        [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
-        [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
-        [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
-        [db.Sequelize.literal('avg("co2")'), 'co2'],
-        [db.Sequelize.literal('avg("ch4")'), 'ch4'],
-        [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
-      ],
-      where: {
-        ts: {
-          [db.Op.gte]: twentyFourHoursAgo,
-        },
-      },
-      group: [
-        db.Sequelize.literal(
-          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
-        ),
-      ],
-      order: [
-        db.Sequelize.literal(
-          'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
-        ),
-      ],
-    });
+        order: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+      });
 
-    response.json(data);
+      response.json(data);
+    } else {
+      // Hitung timestamp untuk 24 jam yang lalu
+      const twentyFourHoursAgo = moment().tz('Asia/Jakarta').subtract(24, 'hours').toDate();
+
+      // Query data dari database
+      const data = await Carbon2.findAll({
+        attributes: [
+          // Kolom yang ingin dihitung rata-ratanya
+          [
+            db.Sequelize.literal(
+              'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+            ),
+            'time',
+          ],
+          [db.Sequelize.literal('avg("bmp388Pressure")'), 'bmp388Pressure'],
+          [db.Sequelize.literal('avg("bmp388Temp")'), 'bmp388Temp'],
+          [db.Sequelize.literal('avg("bmp388ApprxAltitude")'), 'bmp388ApprxAltitude'],
+          [db.Sequelize.literal('avg("sht85Humi")'), 'sht85Humi'],
+          [db.Sequelize.literal('avg("sht85Temp")'), 'sht85Temp'],
+          [db.Sequelize.literal('avg("co2")'), 'co2'],
+          [db.Sequelize.literal('avg("ch4")'), 'ch4'],
+          [db.Sequelize.literal('avg("H2OSHT85")'), 'H2OSHT85'],
+        ],
+        where: {
+          ts: {
+            [db.Op.gte]: twentyFourHoursAgo,
+          },
+        },
+        group: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+        order: [
+          db.Sequelize.literal(
+            'date_trunc(\'hour\', "ts" AT TIME ZONE \'Asia/Jakarta\')',
+          ),
+        ],
+      });
+
+      response.json(data);
+    }
   } catch (error) {
     response.status(500).json({ error: 'Failed to get average data per hour' });
   }
