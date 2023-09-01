@@ -34,6 +34,8 @@ Node.js version on author machine running: **v18.13.0**
 | GET | /api/get50LogStatus2 | Return json 50 data of last device 2 log status from database |
 | GET | /api/getLastDayCarbon1 | Return json data average every hour yerterday carbon1 from database |
 | GET | /api/getLastDayCarbon2 | Return json data average every hour yerterday carbon2 from database |
+| GET | /api/getAvgCarbon1/:param? | Return json data average every hour last paramHours carbon1 from database |
+| GET | /api/getAvgCarbon2/:param? | Return json data average every hour last paramHours carbon2 from database |
 | GET | /api/getAvgLoggerDevice | Return json data average every hour last 24 hours logger condition from database |
 | GET | /api/getAvgSCC | Return json data average every hour last 24 hours SCC from database |
 | GET | /api/getAvgDHT1 | Return json data average every hour last 24 hours DHT22 device 1 from database |
