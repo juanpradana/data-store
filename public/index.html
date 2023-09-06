@@ -1,0 +1,285 @@
+<html><head><style>
+  /* Styling for the entire page */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Styling for the header */
+  h1#request-documentation {
+    background-color: #143740;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Styling for the header */
+  h2#request-documentation {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  thead th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 10px;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody td {
+    padding: 10px;
+  }
+  
+  /* Styling for the note section */
+  h3#note {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  /* Code block styling */
+  pre {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin: 2%;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  
+  code.lang-text {
+    font-size: 14px;
+    font-family: monospace;
+  }
+  
+  /* JSON code block styling */
+  code.lang-json {
+    font-size: 14px;
+    font-family: monospace;
+    background-color: #ecf0f1;
+  }
+  </style></head><body>
+  <h1 id="request-documentation">Zan API!</h1>
+  <h2 id="request-documentation">Request Documentation</h2>
+  <table>
+  <thead>
+  <tr>
+  <th>Methods</th>
+  <th>Endpoints</th>
+  <th>Details</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>GET</td>
+  <td>/api</td>
+  <td>Return message: &#39;ZAN API!&#39;</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneCarbon1</td>
+  <td>Return json one of last data on carbon1 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneCarbon2</td>
+  <td>Return json one of last data on carbon2 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneLoggerDevice</td>
+  <td>Return json one of last data on loggerDevice from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneSCC</td>
+  <td>Return json one of last data on scc from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneDHT1</td>
+  <td>Return json one of last DHT22 device 1 data from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getOneDHT2</td>
+  <td>Return json one of last DHT22 device 2 data from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/get50LogStatus1</td>
+  <td>Return json 50 data of last device 1 log status from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/get50LogStatus2</td>
+  <td>Return json 50 data of last device 2 log status from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getLastDayCarbon1</td>
+  <td>Return json data average every hour yerterday carbon1 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getLastDayCarbon2</td>
+  <td>Return json data average every hour yerterday carbon2 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgCarbon1/:param?</td>
+  <td>Return json data average every hour last paramHours carbon1 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgCarbon2/:param?</td>
+  <td>Return json data average every hour last paramHours carbon2 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgLoggerDevice</td>
+  <td>Return json data average every hour last 24 hours logger condition from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgSCC</td>
+  <td>Return json data average every hour last 24 hours SCC from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgDHT1</td>
+  <td>Return json data average every hour last 24 hours DHT22 device 1 from database</td>
+  </tr>
+  <tr>
+  <td>GET</td>
+  <td>/api/getAvgDHT2</td>
+  <td>Return json data average every hour last 24 hours DHT22 device 2 from database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/upCarbon1</td>
+  <td>Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov1 and append to database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/upCarbon2</td>
+  <td>Body data is form-data with key csvFile and value file <urCSVfile.csv> will be saved on server directory eddyCov2 and append to database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/loggerCondition</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/scc</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/dht1</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/dht2</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/loggerStatus1</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  <tr>
+  <td>POST</td>
+  <td>/api/loggerStatus2</td>
+  <td>Body data is json will be saved on database</td>
+  </tr>
+  </tbody>
+  </table>
+  <h3 id="note">Note</h3>
+  <ul>
+  <li>csv header file carbon and value must be:<pre><code class="lang-text"><span class="hljs-symbol">  ts:</span> INTEGER,
+  <span class="hljs-symbol">  humanTime:</span> STRING,
+  <span class="hljs-symbol">  bmp388Pressure:</span> FLOAT,
+  <span class="hljs-symbol">  bmp388Temp:</span> FLOAT,
+  <span class="hljs-symbol">  bmp388ApprxAltitude:</span> FLOAT,
+  <span class="hljs-symbol">  sht85Humi:</span> FLOAT,
+  <span class="hljs-symbol">  sht85Temp:</span> FLOAT,
+  <span class="hljs-symbol">  co2:</span> INTEGER,
+  <span class="hljs-symbol">  ch4:</span> INTEGER,
+  <span class="hljs-symbol">  H2OSHT85:</span> FLOAT
+  </code></pre>
+  </li>
+  <li>json example for /loggerCondition:<pre><code class="lang-json">{
+    <span class="hljs-attr">"ts"</span>: <span class="hljs-number">1690269949330</span>,
+    <span class="hljs-attr">"humanTime"</span>: <span class="hljs-string">"2023/07/25 14:25:49"</span>,
+    <span class="hljs-attr">"cpu_usage"</span>: <span class="hljs-number">21</span>,
+    <span class="hljs-attr">"mem_gpu"</span>: <span class="hljs-number">76</span>,
+    <span class="hljs-attr">"mem_arm"</span>: <span class="hljs-number">948</span>,
+    <span class="hljs-attr">"temp"</span>: <span class="hljs-number">43.8</span>
+  }
+  </code></pre>
+  </li>
+  <li>json example for /scc:<pre><code class="lang-json">{
+    <span class="hljs-attr">"ts"</span>: <span class="hljs-number">1690269957302</span>,
+    <span class="hljs-attr">"humanTime"</span>: <span class="hljs-string">"2023/07/25 14:25:57"</span>,
+    <span class="hljs-attr">"PV_Voltage"</span>: <span class="hljs-number">64.28</span>,
+    <span class="hljs-attr">"PV_Current"</span>: <span class="hljs-number">0.36</span>,
+    <span class="hljs-attr">"PV_Power"</span>: <span class="hljs-number">23.72</span>,
+    <span class="hljs-attr">"Battery_Voltage"</span>: <span class="hljs-number">55.18</span>,
+    <span class="hljs-attr">"Battery_Charge_Current"</span>: <span class="hljs-number">0.43</span>,
+    <span class="hljs-attr">"Battery_Charge_Power"</span>: <span class="hljs-number">23.18</span>,
+    <span class="hljs-attr">"Load_Current"</span>: <span class="hljs-number">0.32</span>,
+    <span class="hljs-attr">"Load_Power"</span>: <span class="hljs-number">17.67</span>,
+    <span class="hljs-attr">"Battery_Remaining_Percentage"</span>: <span class="hljs-number">99</span>,
+    <span class="hljs-attr">"Battery_Temperature"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"Battery_Discharge_Current"</span>: <span class="hljs-number">0.1</span>
+  }
+  </code></pre>
+  </li>
+  <li>json example for /dht1 and /dht2:<pre><code class="lang-json">{
+    <span class="hljs-attr">"ts"</span>: <span class="hljs-number">1690269957302</span>,
+    <span class="hljs-attr">"humanTime"</span>: <span class="hljs-string">"2023/07/25 14:25:57"</span>,
+    <span class="hljs-attr">"dht22Temp"</span>: <span class="hljs-number">64.28</span>,
+    <span class="hljs-attr">"dht22Humi"</span>: <span class="hljs-number">0.36</span>,
+    <span class="hljs-attr">"dht22HeatIndex"</span>: <span class="hljs-number">23.72</span>,
+  }
+  </code></pre>
+  </li>
+  <li>json example for /loggerStatus1 and /loggerStatus2:<pre><code class="lang-json">{
+    <span class="hljs-attr">"log"</span>: <span class="hljs-string">"jdekkekklkekllkewlwewe"</span>,
+  }
+  </code></pre>
+  </li>
+  </ul>
+  </body></html>

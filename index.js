@@ -20,6 +20,9 @@ db.sequelize.sync();
 // medium route
 app.use('/api', route);
 
+// middleware setting for public directory
+app.use(express.static('public'));
+
 // set port, listen for requests
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
