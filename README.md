@@ -12,6 +12,17 @@ Node.js version on author machine running: **v18.13.0**
 - Connect to zan_db database, example using ```psql```: ```\c zan_db```
 - From zan_db give public schema permission to user zan, example using ```psql```: ```GRANT ALL ON SCHEMA public TO zan;```
 
+### Enable postgre access from internet
+- ```sudo nano /etc/postgresql/<versi>/main/postgresql.conf```
+  
+  **change:** ```#listen_addresses = 'localhost'```
+  
+  **to:** ```listen_addresses = '*'```
+  
+- ```sudo nano /etc/postgresql/<versi>/main/pg_hba.conf```
+
+  **add:** ```host    all    all    0.0.0.0/0    md5```
+
 ## Backend Setup
 - install nodejs v18.13.0
 - ```git clone https://github.com/juanpradana/data-store.git```
